@@ -6,8 +6,9 @@ import { AuthContext } from '../../providers/authContext';
 import BottomTabNavigator from './BottomTabNavigator';
 import LoginScreen from '../../screens/LoginScreen';
 import { linking } from './linking';
+import { RootStackParamList } from './types';
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<RootStackParamList>();
 
 export const RootNavigator = () => {
   const { isAuthenticated } = useContext(AuthContext);

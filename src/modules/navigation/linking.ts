@@ -1,7 +1,6 @@
-// linking.ts
 import * as Linking from 'expo-linking';
 import { LinkingOptions } from '@react-navigation/native';
-import { RootStackParamList } from './types';
+import { BottomTabParamList, RootStackParamList } from './types';
 import { auth } from '../../firebase.config';
 
 export const linking: LinkingOptions<RootStackParamList> = {
@@ -9,17 +8,14 @@ export const linking: LinkingOptions<RootStackParamList> = {
   config: {
     screens: {
       Login: 'login',
-      Home: '',
-      AR: 'ar/:starId?',
-      Settings: 'settings',
+      BottomTabs: {
+        path: 'tabs',
+        screens: {
+          Home: '',
+          AR: 'ar/:starId?',
+          Settings: 'settings',
+        } as Record<keyof BottomTabParamList, string>,
+      },
     },
-  },
-  getAction: async (url: string, _: any) => {
-    const action = Linking.parse(url);
-    const user = auth.currentUser;
-    if (!user && action?.path !== 'login') {
-      return { type: 'navigation', routeName: 'Login' };
-    }
-    return action;
   },
 };
